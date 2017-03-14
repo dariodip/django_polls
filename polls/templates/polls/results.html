@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.min.css' %}" />
+
+</head>
+<body>
+
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="active"><a href="../../">Home</a></li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">Pools Website</h3>
+    </div>
+    <div class="jumbotron">
+        <nav>
+            <h2>{{ question.question_text }}</h2>
+        </nav>
+
+        <ul class="list-group">
+            {% for choice in question.choice_set.all %}
+                {% if forloop.counter == 1 %}
+                    <li class="list-group-item active"><b>{{ choice.choice_text }}</b> wins with vote{{ choice.votes|pluralize }}:  <span class="badge">{{ choice.votes }}</span> </li>
+                {% else %}
+                    <li class="list-group-item">{{ choice.choice_text }} vote{{ choice.votes|pluralize }}:  <span class="badge">{{ choice.votes }}</span> </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+    <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+
+</div>
+
+
+</body>
+</html>
