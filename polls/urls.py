@@ -1,8 +1,9 @@
 from django.conf.urls import url, include
+from django.contrib.auth import views as auth_views
 from rest_framework import routers
 from rest_framework_swagger.views import get_swagger_view
 from .views import QuestionViewSet, ChoiceViewSet
-from . import views
+from . import views, templates
 
 app_name = 'polls'
 
@@ -21,6 +22,9 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/results/$', views.ResultsView.as_view(), name='results'),
     # /polls/id/vote
     url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
+    # login view
+    url(r'^login/$', auth_views.login, {'template_name': 'polls/login.html'}, name="login"),
+
     # swagger
     url(r'^docs/', schema_view),
 ]
