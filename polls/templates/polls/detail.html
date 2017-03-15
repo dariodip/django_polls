@@ -1,28 +1,11 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    {% if  question %}
-        <title>Detail for {{ question.id }}</title>
-    {% else %}
-        <title>Question not found</title>
-    {% endif %}
+{% extends "polls/base.html" %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.min.css' %}" />
-</head>
-<body>
-<div class="container">
-    <div class="header clearfix">
-        <nav>
-            <ul class="nav nav-pills pull-right">
-                <li role="presentation" class="active"><a href="../">Home</a></li>
-            </ul>
-        </nav>
-        <h3 class="text-muted">Pools Website</h3>
-    </div>
-    <div class="jumbotron">
-        <h2>{{ question.question_text }}</h2>
+{% block title %}
+    Detail page for {{ question.id }}
+{% endblock %}
+
+{% block maincontent %}
+            <h2>{{ question.question_text }}</h2>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p> {% endif %}
         <form action="{% url 'polls:vote' question.id %}" method="post">
             <div class="radio">
@@ -35,7 +18,4 @@
 
             <input type="submit" value="Vote"/>
         </form>
-    </div>
-</div>
-</body>
-</html>
+{% endblock %}

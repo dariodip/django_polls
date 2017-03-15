@@ -30,7 +30,7 @@ router = routers.DefaultRouter()
 
 
 urlpatterns = [
-    url(r'^',  include('polls.urls')),
+    url(r'^',  include('polls.urls'), name='index'),
     url(r'^api/', include('polls.urls', namespace='polls')),
     url(r'^polls/', include('polls.urls')),
     url(r'^admin/', admin.site.urls),

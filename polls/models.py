@@ -2,6 +2,8 @@ import datetime
 from django.db import models
 from django.utils import timezone as d_timezone
 from django.contrib.auth.models import AbstractUser
+from django.core.cache import cache
+from mysite import settings
 
 
 class Question(models.Model):
@@ -39,4 +41,17 @@ class Choice(models.Model):
 
 
 class PollUser(AbstractUser):
-    last_seen = models.DateTimeField('last seen', default=d_timezone.now())
+
+    def last_seen(self):
+        return cache.get('see   n_%s' % self.user.username)
+
+    def online(self):
+        if self.last_seen():
+            now = datetime.datetime.now()
+            if now > self.last_seen() + datetime.timedelta(
+                    seconds=settings.USER_ONLINE_TIMEOUT):
+                return False
+            else:
+                return True
+        else:
+            return False

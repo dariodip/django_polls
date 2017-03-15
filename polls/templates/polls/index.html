@@ -1,38 +1,19 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Polls</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.min.css' %}" />
-</head>
-<body>
-<div class="container">
-    <div class="header clearfix">
-        <nav>
-            <ul class="nav nav-pills pull-right">
-                <li role="presentation" class="active"><a href="#">Home</a></li>
-            </ul>
-        </nav>
-        <h3 class="text-muted">Pools Website</h3>
-    </div>
-    <div class="jumbotron">
-        <h1>Polls WebSite</h1>
-        <h3>The world's unuseful website ever </h3>
-        {% if latest_question_list %}
-            <ul>
-                {% for question in latest_question_list %}
-                    <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No polls are available.</p>
-        {% endif %}
-    </div>
+{% extends "polls/base.html" %}
 
-</div>
+{% block title %}
+    Polls
+{% endblock %}
 
-
-<script src="{% static 'polls/js/bootstrap.min.js' %}"></script>
-</body>
-</html>
+{% block maincontent %}
+    <h1>Polls WebSite</h1>
+    <h3>The world's unuseful website ever </h3>
+    {% if latest_question_list %}
+        <ul>
+            {% for question in latest_question_list %}
+                <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+{% endblock %}

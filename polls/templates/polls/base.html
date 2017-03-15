@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.min.css' %}" />
+    {% endblock %}
+</head>
+<body>
+{% block container %}
+    <div class="container">
+        {% block header %}
+            <div class="header clearfix">
+                <nav>
+                    <ul class="nav nav-pills pull-right">
+                        <li role="presentation" class="active"><a href="{% url 'polls:index' %}">Home</a></li>
+                    </ul>
+                </nav>
+                <h3 class="text-muted">Pools Website</h3>
+            </div>
+        {% endblock %}
+        <div class="jumbotron">
+            {% block maincontent %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>
