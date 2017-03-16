@@ -1,10 +1,9 @@
 {% extends 'polls/base.html' %}
 {% block title %} Register{% endblock %}
 {% block maincontent %}
-    <form action="/your-name/" method="post">
+    <form action="" method="post">
         {% csrf_token %}
         {{ form }}
-        {# TODO #}
         <input type="submit" value="Submit" />
     </form>
 {% endblock %}

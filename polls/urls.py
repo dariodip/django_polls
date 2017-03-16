@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'polls/login.html', 'redirect_field_name': '/'}, name="login"),
     # logout view
     url(r'^logout/$', auth_views.logout, {'template_name': 'polls/logout.html'}, name='logout'),
+
+    url(r'^signup/$',views.SignupView.as_view(), name='signup'),
     # swagger
     url(r'^docs/', schema_view),
 ]

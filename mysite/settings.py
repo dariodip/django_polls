@@ -152,6 +152,3 @@ USER_ONLINE_TIMEOUT = 300
 # their last seen is removed from the cache
 USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.get_user_model',
-)

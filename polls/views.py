@@ -3,16 +3,18 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
+from django.views.generic.edit import FormView
+from django.shortcuts import render
 from rest_framework import viewsets
-
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
-from .models import Question, Choice
+from .models import Question, Choice, PollUser
 from .serializers import QuestionSerializer, ChoiceSerializer
-
+from .forms import UserRegistrationForm
 
 # REST
+
 
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
@@ -58,7 +60,24 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
-class CreateView()
+class SignupView(FormView):
+    template_name = 'polls/signup.html'
+    form_class = UserRegistrationForm
+    success_url = '/login'
+
+    def form_valid(self, form):
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            user = PollUser.objects.create_user(username=cleaned_data['username'],
+                                                first_name=cleaned_data['first_name'],
+                                                last_name=cleaned_data['last_name'],
+                                                email=cleaned_data['email'])
+            try:
+                user.save()
+            except Exception as saving_ex:
+                print(saving_ex)
+            finally:
+                return super(SignupView, self).form_valid(form)
 
 
 def vote(request, question_id):
