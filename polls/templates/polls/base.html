@@ -53,11 +53,11 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">Hi,
+                        <a class="navbar-brand" href="#">Hi
                             {% if request.user.is_authenticated %}
                                 {{ request.user }}
                             {% else %}
-                                Anonimous
+                                anonymous
                             {% endif %} !</a>
                     </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
@@ -89,12 +89,16 @@
                 </div>
                 {% block connected_users %}
                     <div class="col-sm-2 sidenav">
+                        <h3>There
+                            {% if online_users.count == 1%}is
+                            {% else %}are
+                            {% endif %}
+                            {{ online_users|length}} connected user{{ online_users|pluralize }}</h3>
+                        {% for online_user in online_users %}
                         <div class="well">
-                            <p>ADS</p>
+                            <p><span class="glyphicon glyphicon-eye-open"></span> {{ online_user.username }}</p>
                         </div>
-                        <div class="well">
-                            <p>ADS</p>
-                        </div>
+                        {% endfor %}
                     </div>
                 {% endblock %}
             </div>

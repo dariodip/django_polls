@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'polls.context.online_users_context'
             ],
         },
     },
@@ -114,7 +115,7 @@ LOGIN_REDIRECT_URL = '/'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Rome'
 
 USE_I18N = True
 
@@ -146,7 +147,7 @@ CACHES = {
 }
 
 # Number of seconds of inactivity before a user is marked offline
-USER_ONLINE_TIMEOUT = 300
+USER_ONLINE_TIMEOUT = 1
 
 # Number of seconds that we will keep track of inactive users for before
 # their last seen is removed from the cache
