@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from rest_framework import viewsets
+
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
@@ -55,6 +56,9 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+
+class CreateView()
 
 
 def vote(request, question_id):

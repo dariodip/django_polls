@@ -5,13 +5,14 @@ from .models import Question, Choice
 class ChoiceInline(admin.TabularInline):
     model = Choice
     extra = 3
-    fields = ['choice_text']
+    fields = ['choice_text', 'users']
 
 
 class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,                  {'fields': ['question_text']}),
         ('Date information',    {'fields': ['pub_date'], 'classes': ['collapse']}),
+        ('User',                {'fields': ['asker']})
     ]
     inlines = [ChoiceInline]
     list_display = ('question_text', 'pub_date', 'was_published_recently')

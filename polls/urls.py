@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 from rest_framework import routers
 from rest_framework_swagger.views import get_swagger_view
 from .views import QuestionViewSet, ChoiceViewSet
-from . import views, templates
+from . import views
 
 app_name = 'polls'
 
@@ -23,8 +23,9 @@ urlpatterns = [
     # /polls/id/vote
     url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
     # login view
-    url(r'^login/$', auth_views.login, {'template_name': 'polls/login.html'}, name="login"),
-
+    url(r'^login/$', auth_views.login, {'template_name': 'polls/login.html', 'redirect_field_name': '/'}, name="login"),
+    # logout view
+    url(r'^logout/$', auth_views.logout, {'template_name': 'polls/logout.html'}, name='logout'),
     # swagger
     url(r'^docs/', schema_view),
 ]
