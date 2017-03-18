@@ -25,7 +25,7 @@ SECRET_KEY = '6yc(38y$3#s*s_x-1w6)de8v-!ytu19cunp=xgi%!qxqbj+4%g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -147,9 +147,8 @@ CACHES = {
 }
 
 # Number of seconds of inactivity before a user is marked offline
-USER_ONLINE_TIMEOUT = 1
+USER_ONLINE_TIMEOUT = 60
 
 # Number of seconds that we will keep track of inactive users for before
 # their last seen is removed from the cache
 USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7
-

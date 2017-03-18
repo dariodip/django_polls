@@ -1,4 +1,3 @@
-import datetime
 from django.db import models
 from django.utils import timezone as d_timezone
 from django.contrib.auth.models import AbstractUser
@@ -9,13 +8,12 @@ from mysite import settings
 class PollUser(AbstractUser):
 
     def last_seen(self):
-        return cache.get('see   n_%s' % self.user.username)
+        return cache.get('seen_%s' % self.username)
 
     def online(self):
         if self.last_seen():
-            now = datetime.datetime.now()
-            if now > self.last_seen() + datetime.timedelta(
-                    seconds=settings.USER_ONLINE_TIMEOUT):
+            time_interval = time = d_timezone.now() - d_timezone.timedelta(seconds=settings.USER_ONLINE_TIMEOUT)
+            if self.last_seen() < time_interval:
                 return False
             else:
                 return True
