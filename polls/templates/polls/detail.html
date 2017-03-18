@@ -5,17 +5,26 @@
 {% endblock %}
 
 {% block maincontent %}
-            <h2>{{ question.question_text }}</h2>
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p> {% endif %}
-        <form action="{% url 'polls:vote' question.id %}" method="post">
-            <div class="radio">
-                {% csrf_token %}
-                {% for choice in question.choice_set.all %}
-                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
-                    <label class="label label-default" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label> <br />
-                {% endfor %}
-            </div>
+    <h2>{{ question.question_text }}</h2>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p> {% endif %}
+    <div class="container">
+        <div class="section">
 
-            <input type="submit" value="Vote"/>
-        </form>
+            <form action="{% url 'polls:vote' question.id %}" method="post" class="col s12">
+                <div class="radio">
+                    {% csrf_token %}
+                    {% for choice in question.choice_set.all %}
+                        <p>
+                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
+                            <label class="label label-default" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label> <br />
+                        </p>
+                    {% endfor %}
+                </div>
+                <br/><br/>
+                <input type="submit" class="waves-effect waves-light btn" value="Vote"/>
+            </form>
+        </div>
+    </div>
+
+    <br/><br/>
 {% endblock %}

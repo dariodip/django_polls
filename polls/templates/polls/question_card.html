@@ -1,0 +1,12 @@
+<div class="col s12 m4">
+    <div class="icon-block">
+        <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
+        <h5 class="center">
+            <a href="{% url 'polls:detail' question.id %}">
+                {{ t_question_text }}
+                <span class="badge"></span>
+            </a>
+        </h5>
+        <p class="light">{{ t_question_date}}</p>
+    </div>
+</div>

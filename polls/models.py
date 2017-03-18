@@ -3,6 +3,7 @@ from django.utils import timezone as d_timezone
 from django.contrib.auth.models import AbstractUser
 from django.core.cache import cache
 from mysite import settings
+import datetime
 
 
 class PollUser(AbstractUser):

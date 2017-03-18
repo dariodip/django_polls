@@ -5,15 +5,38 @@
 {% endblock %}
 
 {% block maincontent %}
-    <h1>Polls WebSite</h1>
-    <h3>The world's unuseful website ever </h3>
-    {% if latest_question_list %}
-        <ul>
-            {% for question in latest_question_list %}
-                <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No polls are available.</p>
-    {% endif %}
+    <br><br>
+    <h1 class="header center orange-text">Polls website</h1>
+    <div class="row center">
+        <h5 class="header col s12 light">The world's useless website ever</h5>
+    </div>
+    <br><br>
+
+
+
+{% endblock %}
+
+{% block latest_answer_n_users %}
+    <div class="container">
+        <div class="section">
+
+            <!--   Icon Section   -->
+            <div class="row">
+                {% if latest_question_list %}
+
+                    {% for question in latest_question_list %}
+                        {% include 'polls/question_card.html' with t_question_date=question.pub_date t_question_text=question.question_text  %}
+                    {% endfor %}
+                {% else %}
+                    <p>No polls are available.</p>
+                {% endif %}
+            </div>
+
+        </div>
+        <br><br>
+
+        <div class="section">
+
+        </div>
+    </div>
 {% endblock %}

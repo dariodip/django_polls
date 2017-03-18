@@ -5,16 +5,22 @@
 {% endblock %}
 
 {% block maincontent %}
-    <nav>
-        <h2>{{ question.question_text }}</h2>
-    </nav>
+    <div class="container">
+        <h1>Results</h1>
+    </div>
 
-    <ul class="list-group">
+    <ul class="collection">
+        <li class="collection-header"><h4>{{ question.question_text }}</h4></li>
         {% for choice in question.choice_set.all %}
             {% if forloop.counter == 1 %}
-                <li class="list-group-item active"><b>{{ choice.choice_text }}</b> wins with vote{{ choice.votes|pluralize }}:  <span class="badge">{{ choice.votes }}</span> </li>
+                <li class="collection-item active">
+                    <b>{{ choice.choice_text }}</b>
+                    wins with vote{{ choice.votes|pluralize }}:
+                    <span class="new badge white green-text" data-badge-caption="!">{{ choice.votes }}</span> </li>
             {% else %}
-                <li class="list-group-item">{{ choice.choice_text }} vote{{ choice.votes|pluralize }}:  <span class="badge">{{ choice.votes }}</span> </li>
+                <li class="collection-item">{{ choice.choice_text }} vote{{ choice.votes|pluralize }}:
+                    <span class="badge">{{ choice.votes }}</span>
+                </li>
             {% endif %}
         {% endfor %}
     </ul>

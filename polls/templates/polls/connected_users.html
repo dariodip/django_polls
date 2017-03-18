@@ -1,0 +1,15 @@
+{# TODO #}
+{% block connected_users %}
+    <div class="col-sm-2 sidenav">
+        <h3>There
+            {% if online_users.count == 1%}is
+            {% else %}are
+            {% endif %}
+            {{ online_users|length}} connected user{{ online_users|pluralize }}</h3>
+        {% for online_user in online_users %}
+            <div class="well">
+                <p><span class="glyphicon glyphicon-eye-open"></span> {{ online_user.username }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

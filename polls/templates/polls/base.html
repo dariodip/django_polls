@@ -3,112 +3,80 @@
 <html lang="en">
 <head>
     {% block head %}
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
         <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.min.css' %}" />
-        <style>
-            /* Remove the navbar's default margin-bottom and rounded borders */
-            .navbar {
-                margin-bottom: 0;
-                border-radius: 0;
-            }
 
-            /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-            .row.content {height: 450px}
-
-            /* Set gray background color and 100% height */
-            .sidenav {
-                padding-top: 20px;
-                background-color: #f1f1f1;
-                height: 100%;
-            }
-
-            /* Set black background color, white text and some padding */
-            footer {
-                background-color: #555;
-                color: white;
-                padding: 15px;
-            }
-
-            /* On small screens, set height to 'auto' for sidenav and grid */
-            @media screen and (max-width: 767px) {
-                .sidenav {
-                    height: auto;
-                    padding: 15px;
-                }
-                .row.content {height:auto;}
-            }
-        </style>
+        <!-- CSS  -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="{% static 'polls/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="{% static 'polls/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
     {% endblock %}
 </head>
 <body>
-{% block container %}
-    <div class="container">
-        {% block header %}
-            <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                            <span class="icon-bar">{{ user }}</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Hi
-                            {% if request.user.is_authenticated %}
-                                {{ request.user }}
-                            {% else %}
-                                anonymous
-                            {% endif %} !</a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="myNavbar">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="{% url 'polls:index' %}">Home</a></li>
-                            <li><a href="#">About</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            {% if request.user.is_authenticated %}
-                                <li><span class="glyphicon glyphicon-log-out"></span><a href="{% url 'polls:logout' %}">Logout</a></li>
-                            {% else %}
-                                <li><span class="glyphicon glyphicon-log-in"></span><a href="{% url 'polls:login' %}">Login</a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
+{% block header %}
+
+    <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="{%  url 'polls:index' %}" class="brand-logo">
+                Polls
+            </a>
+            <ul id="dropdown2" class="dropdown-content">
+                <li><a href="{% url 'polls:index' %}">Home</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'polls:logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'polls:login' %}">Login</a></li>
+                    <li><a href="{% url 'polls:signup' %}">Signup</a></li>
+                {% endif %}
+                <li><a href="#">Empty</a></li>
+
+            </ul>
+            <a class="btn dropdown-button right hide-on-med-and-down" href="#!" data-activates="dropdown2">Hi
+                {% if request.user.is_authenticated %}
+                    {{ request.user }}
+                {% else %}
+                    anonymous
+                {% endif %} !<i class="mdi-navigation-arrow-drop-down right"></i></a>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="#">Navbar Link</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+{% endblock %} {# end block header #}
+{% block containter %}
+
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            {% block maincontent %}
+            {% endblock %}
+        </div>
+    </div>
+
+
+    {% block latest_answer_n_users %}
+    {% endblock %}
+
+
+
+{% endblock %} {# end block container #}
+{% block footer %}
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">A Company</h5>
                 </div>
-            </nav>
-
-        {% endblock %}
-
-        <div class="container-fluid text-center">
-            <div class="row content">
-
-
-                <div class="col-sm-10 text-left">
-                    {% block maincontent %}
-                    {% endblock %}
-
-                </div>
-                {% block connected_users %}
-                    <div class="col-sm-2 sidenav">
-                        <h3>There
-                            {% if online_users.count == 1%}is
-                            {% else %}are
-                            {% endif %}
-                            {{ online_users|length}} connected user{{ online_users|pluralize }}</h3>
-                        {% for online_user in online_users %}
-                        <div class="well">
-                            <p><span class="glyphicon glyphicon-eye-open"></span> {{ online_user.username }}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                {% endblock %}
             </div>
         </div>
+    </footer>
+{% endblock %}{# end block footer #}
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{% static 'polls/js/materialize.js' %}"></script>
+<script src="{% static 'polls/js/init.js' %}"></script>
 
-        <footer class="container-fluid text-center">
-            <p>Footer Text</p>
-        </footer>
-
-    </div>
-{% endblock %}
 </body>
 </html>
