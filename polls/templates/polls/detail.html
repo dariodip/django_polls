@@ -15,7 +15,11 @@
                     {% csrf_token %}
                     {% for choice in question.choice_set.all %}
                         <p>
-                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
+                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"
+                            {% if not request.user.is_authenticated %}
+                                disabled
+                            {% endif %}
+                            />
                             <label class="label label-default" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label> <br />
                         </p>
                     {% endfor %}

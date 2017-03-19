@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_swagger'
+    'rest_framework_swagger',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +51,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'polls.middleware.ActiveUserMiddleware'
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -66,7 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'polls.context.online_users_context'
+                'polls.context.app_name'
             ],
         },
     },
@@ -105,6 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.RemoteUserBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -152,3 +153,32 @@ USER_ONLINE_TIMEOUT = 60
 # Number of seconds that we will keep track of inactive users for before
 # their last seen is removed from the cache
 USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "polls.routing.channel_routing",
+    },
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'INFO'
+        },
+        'chat': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'DEBUG',
+        },
+    },
+}

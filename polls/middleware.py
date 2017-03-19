@@ -4,6 +4,7 @@ from django.core.cache import cache
 from django.conf import settings
 
 
+# DEPRECATED
 class ActiveUserMiddleware:
 
     def __init__(self, get_response):

@@ -11,57 +11,68 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="{% static 'polls/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="{% static 'polls/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <style>
+            body {
+                display: flex;
+                min-height: 100vh;
+                flex-direction: column;
+            }
+
+            #main {
+                flex: 1 0 auto;
+            }
+        </style>
     {% endblock %}
 </head>
 <body>
-{% block header %}
+<main>
+    {% block header %}
 
-    <nav class="light-blue lighten-1" role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="{%  url 'polls:index' %}" class="brand-logo">
-                Polls
-            </a>
-            <ul id="dropdown2" class="dropdown-content">
-                <li><a href="{% url 'polls:index' %}">Home</a></li>
-                {% if request.user.is_authenticated %}
-                    <li><a href="{% url 'polls:logout' %}">Logout</a></li>
-                {% else %}
-                    <li><a href="{% url 'polls:login' %}">Login</a></li>
-                    <li><a href="{% url 'polls:signup' %}">Signup</a></li>
-                {% endif %}
-                <li><a href="#">Empty</a></li>
+        <nav class="light-blue lighten-1" role="navigation">
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="{%  url 'polls:index' %}" class="brand-logo">
+                    Polls
+                </a>
+                <ul id="dropdown2" class="dropdown-content">
+                    <li><a href="{% url 'polls:index' %}">Home</a></li>
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'polls:logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'polls:login' %}">Login</a></li>
+                        <li><a href="{% url 'polls:signup' %}">Signup</a></li>
+                    {% endif %}
+                    <li><a href="#">Empty</a></li>
 
-            </ul>
-            <a class="btn dropdown-button right hide-on-med-and-down" href="#!" data-activates="dropdown2">Hi
-                {% if request.user.is_authenticated %}
-                    {{ request.user }}
-                {% else %}
-                    anonymous
-                {% endif %} !<i class="mdi-navigation-arrow-drop-down right"></i></a>
+                </ul>
+                <a class="btn dropdown-button right hide-on-med-and-down" href="#!" data-activates="dropdown2">Hi
+                    {% if request.user.is_authenticated %}
+                        {{ request.user }}
+                    {% else %}
+                        anonymous
+                    {% endif %} !<i class="mdi-navigation-arrow-drop-down right"></i></a>
 
-            <ul id="nav-mobile" class="side-nav">
-                <li><a href="#">Navbar Link</a></li>
-            </ul>
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul id="nav-mobile" class="side-nav">
+                    <li><a href="#">Navbar Link</a></li>
+                </ul>
+                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+    {% endblock %} {# end block header #}
+    {% block containter %}
+
+        <div class="section no-pad-bot" id="index-banner">
+            <div class="container">
+                {% block maincontent %}
+                {% endblock %}
+            </div>
         </div>
-    </nav>
-{% endblock %} {# end block header #}
-{% block containter %}
 
-    <div class="section no-pad-bot" id="index-banner">
-        <div class="container">
-            {% block maincontent %}
-            {% endblock %}
-        </div>
-    </div>
+        {% block latest_answer_n_users %}
+        {% endblock %}
 
+    {% endblock %} {# end block container #}
+</main>
 
-    {% block latest_answer_n_users %}
-    {% endblock %}
-
-
-
-{% endblock %} {# end block container #}
 {% block footer %}
     <footer class="page-footer">
         <div class="container">
@@ -74,9 +85,11 @@
     </footer>
 {% endblock %}{# end block footer #}
 <!--  Scripts-->
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="{% static 'polls/js/materialize.js' %}"></script>
-<script src="{% static 'polls/js/init.js' %}"></script>
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="{% static 'polls/js/materialize.js' %}"></script>
+    <script src="{% static 'polls/js/init.js' %}"></script>
+{% endblock %}
 
 </body>
 </html>

@@ -1,4 +1,5 @@
 {% extends "polls/base.html" %}
+{% load static %}
 
 {% block title %}
     Polls
@@ -30,13 +31,25 @@
                 {% else %}
                     <p>No polls are available.</p>
                 {% endif %}
-            </div>
+                <div class="col s12 m4">
 
+                    <div class="section">
+                        <form id="onlineusers_form">
+                            <input id="hidden_username" type="hidden" value="{{ request.user.username }}" />
+                            <ul id="online_users" class="collection with-header">
+                                <li class="collection-header"><h5>Online users</h5></li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <br><br>
-
-        <div class="section">
-
-        </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'polls/js/web_socket.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'polls/js/reconnecting-websocket.min.js' %}" ></script>
 {% endblock %}

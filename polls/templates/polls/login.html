@@ -12,34 +12,23 @@
         <p>Your username ad password didn't match. Please try again</p>
     {% endif %}
 
-    <form method="post" id="login-form" action="{% url 'polls:login' %}" class="col s12">
-
+    <form method="post" action="{% url 'polls:login' %}">
         {% csrf_token %}
-        <div class="input-field">
-            <i class="material-icons prefix">account_circle</i>
-            {{ form.username }}
-            <label for="{{ form.username.id_for_label }}" data-error="{{ form.username.errors }}">
-                Username
-            </label>
-        </div>
-
-
-        <div class="input-field">
-            <i class="material-icons prefix">vpn_key</i>
-            {{ form.password }}
-            <label for="{{ form.password.id_for_label }}" data-error="{{ form.password.errors }}">
-                Password
-            </label>
-        </div>
-
-        <br/>
-        <br/>
+        <table>
+            <tr>
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+        </table>
 
         <a class="waves-effect waves-light btn">
             <input type="submit" value="login" />
         </a>
-        <input type="hidden" name="next" value="{{ next }}"/>
-
+        <input type="hidden" name="next" value="{{ next }}" />
     </form>
     <br/>    <br/>    <br/>
 

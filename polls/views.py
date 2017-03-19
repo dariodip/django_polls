@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from django.views.generic.edit import FormView
-from django.shortcuts import render
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import list_route
@@ -42,7 +43,7 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:3]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:2]
 
 
 class DetailView(generic.DetailView):
@@ -69,7 +70,8 @@ class SignupView(FormView):
             user = PollUser.objects.create_user(username=cleaned_data['username'],
                                                 first_name=cleaned_data['first_name'],
                                                 last_name=cleaned_data['last_name'],
-                                                email=cleaned_data['email'])
+                                                email=cleaned_data['email'],
+                                                password=cleaned_data['password'])
             try:
                 user.save()
             except Exception as saving_ex:
@@ -78,6 +80,7 @@ class SignupView(FormView):
                 return super(SignupView, self).form_valid(form)
 
 
+@login_required
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -91,3 +94,11 @@ def vote(request, question_id):
         selected_choice.votes += 1
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def question_channel(request):
+    user_model = get_user_model()
+    online_users = [username for username in user_model.objects.all() if username.online()][:5]
+    return render(request, "polls/index.html", {
+        'online_users': online_users,
+    })
