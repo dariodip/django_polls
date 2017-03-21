@@ -1,5 +1,6 @@
 {% extends "polls/base.html" %}
 {% load static %}
+{% load render_bundle from webpack_loader %}
 
 {% block title %}
     Polls
@@ -7,10 +8,22 @@
 
 {% block maincontent %}
     <br><br>
-    <h1 class="header center orange-text">Polls website</h1>
-    <div class="row center">
-        <h5 class="header col s12 light">The world's useless website ever</h5>
+    <div class="row">
+        <div class="col s12 m6">
+            <h1 class="header center orange-text">Polls website</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">The world's useless website ever</h5>
+            </div>
+        </div>
+
+        <div class="col s12 m6">
+            <div id="container">
+
+            </div>
+            {% render_bundle 'main' %}
+        </div>
     </div>
+
     <br><br>
 
 
@@ -18,34 +31,32 @@
 {% endblock %}
 
 {% block latest_answer_n_users %}
-    <div class="container">
-        <div class="section">
+    <div class="section">
 
-            <!--   Icon Section   -->
-            <div class="row">
-                {% if latest_question_list %}
+        <!--   Icon Section   -->
+        <div class="row">
+            {% if latest_question_list %}
 
-                    {% for question in latest_question_list %}
-                        {% include 'polls/question_card.html' with t_question_date=question.pub_date t_question_text=question.question_text  %}
-                    {% endfor %}
-                {% else %}
-                    <p>No polls are available.</p>
-                {% endif %}
-                <div class="col s12 m4">
+                {% for question in latest_question_list %}
+                    {% include 'polls/question_card.html' with t_question_date=question.pub_date t_question_text=question.question_text  %}
+                {% endfor %}
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+            <div class="col s12 m4">
 
-                    <div class="section">
-                        <form id="onlineusers_form">
-                            <input id="hidden_username" type="hidden" value="{{ request.user.username }}" />
-                            <ul id="online_users" class="collection with-header">
-                                <li class="collection-header"><h5>Online users</h5></li>
-                            </ul>
-                        </form>
-                    </div>
+                <div class="section">
+                    <form id="onlineusers_form">
+                        <input id="hidden_username" type="hidden" value="{{ request.user.username }}" />
+                        <ul id="online_users" class="collection with-header">
+                            <li class="collection-header"><h5>Online users</h5></li>
+                        </ul>
+                    </form>
                 </div>
             </div>
         </div>
-        <br><br>
     </div>
+    <br><br>
 {% endblock %}
 
 {% block scripts %}
