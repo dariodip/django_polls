@@ -48,6 +48,8 @@
                 <div class="section">
                     <form id="onlineusers_form">
                         <input id="hidden_username" type="hidden" value="{{ request.user.username }}" />
+                        <input id="session_key" type="hidden" value="{{ request.session.session_key }}" />
+
                         <ul id="online_users" class="collection with-header">
                             <li class="collection-header"><h5>Online users</h5></li>
                         </ul>

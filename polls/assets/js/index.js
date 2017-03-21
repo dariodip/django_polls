@@ -1,5 +1,5 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
+const React = require('react');
+const ReactDOM = require('react-dom');
 
 var QuestionsList = React.createClass({
 
@@ -19,12 +19,12 @@ var QuestionsList = React.createClass({
     },
 
     getInitialState: function() {
-        return {data: []};
+        return {data: ['No questions']};
     },
 
     componentDidMount: function() {
         this.loadQuestionsFromServer();
-        setInterval(this.loadBooksFromServer,
+        setInterval(this.loadQuestionsFromServer,
             this.props.pollInterval)
     },
     render: function() {
@@ -37,14 +37,13 @@ var QuestionsList = React.createClass({
         }
         return (
             <div>
-            <ul className="collection with-header">
-            <li className="collection-header"><h5>Found {totalQuestions} questions</h5></li>
-        {questionNodes}
-        </ul>
-        </div>
+                <ul className="collection with-header">
+                    <li className="collection-header"><h5>Found {totalQuestions} questions</h5></li>
+                    {questionNodes}
+                </ul>
+            </div>
         )
     }
 });
 
-ReactDOM.render(<QuestionsList url='/api/' pollInterval={1000} />,
-    document.getElementById('container'))
+ReactDOM.render(<QuestionsList url='/api/' pollInterval={1000} />, document.getElementById('container'));
