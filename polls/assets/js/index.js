@@ -1,33 +1,37 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-var QuestionsList = React.createClass({
+class QuestionsList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {url : props.url, pollInterval: props.pollInterval};
+    }
 
-    loadQuestionsFromServer: function(){
+    loadQuestionsFromServer() {
         $.ajax({
-            url: this.props.url + 'questions/?format=json',
+            url: this.setState({url: this.state.url + 'questions/?format=json'}),
             datatype: 'json',
             cache: false,
             success: function(data) {
-                console.log(data);
                 this.setState({data: data});
             }.bind(this),
             error: function(err) {
                 console.log(err);
             }
-        })
-    },
+        });
+    }
 
-    getInitialState: function() {
+    getInitialState() {
         return {data: ['No questions']};
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.loadQuestionsFromServer();
         setInterval(this.loadQuestionsFromServer,
-            this.props.pollInterval)
-    },
-    render: function() {
+            this.state.pollInterval)
+    }
+
+    render() {
         var totalQuestions = 0;
         if (this.state.data) {
             totalQuestions = this.state.data.length;
@@ -44,6 +48,7 @@ var QuestionsList = React.createClass({
             </div>
         )
     }
-});
+}
+
 
 ReactDOM.render(<QuestionsList url='/api/' pollInterval={1000} />, document.getElementById('container'));
