@@ -2,27 +2,29 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 
 class QuestionsList extends React.Component {
+
     constructor(props) {
         super(props);
-        this.state = {url : props.url, pollInterval: props.pollInterval};
+        this.state = {url : props.url + 'questions/?format=json',
+            pollInterval: props.pollInterval,
+            data: []};
+        this.loadQuestionsFromServer = this.loadQuestionsFromServer.bind(this);
     }
 
     loadQuestionsFromServer() {
         $.ajax({
-            url: this.setState({url: this.state.url + 'questions/?format=json'}),
+            url: this.state.url,
             datatype: 'json',
             cache: false,
             success: function(data) {
-                this.setState({data: data});
+                this.setState((prevState, props) => {
+                    return {data: data}}
+                );
             }.bind(this),
             error: function(err) {
                 console.log(err);
             }
         });
-    }
-
-    getInitialState() {
-        return {data: ['No questions']};
     }
 
     componentDidMount() {
@@ -36,8 +38,12 @@ class QuestionsList extends React.Component {
         if (this.state.data) {
             totalQuestions = this.state.data.length;
             var questionNodes = this.state.data.map(function(question){
-                return <li className="collection-item" key={question.id}> {question.question_text} </li>
-            })
+                return(
+                    <li className="collection-item" key={question.id}>
+                        <i className="material-icons">label</i>
+                        {question.question_text}
+                    </li>)
+            });
         }
         return (
             <div>
