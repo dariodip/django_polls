@@ -34,10 +34,10 @@ class QuestionsList extends React.Component {
     }
 
     render() {
-        var totalQuestions = 0;
+        let totalQuestions = 0;
         if (this.state.data) {
             totalQuestions = this.state.data.length;
-            var questionNodes = this.state.data.map(function(question){
+            let questionNodes = this.state.data.map(function(question){
                 return(
                     <li className="collection-item" key={question.id}>
                         <i className="material-icons">label</i>
