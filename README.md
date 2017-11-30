@@ -2,7 +2,7 @@
 Just a useless try. I just wanted to try Python's channel and Django.
 
 PS: This was my first project in Django and I know it's not perfect. When I'll have more time, I'll correct some bugs.
-PPS: If you want to work on it, correct bugs, fork it, or something else, feel free :)
+PPS: If you want to work on it, correct bugs, fork it, or something else, feel free to do it :)
 
 ## Setup
 
