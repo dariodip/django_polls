@@ -31,7 +31,7 @@ To activate the virtual environment, in the main directory on the project run:
 or
 `venv\Scripts\activate` on Windows.
 
-You can check if the virtual environmnent is activate, checking if the command prompt has the prefix `(venv)`.
+You can check if the virtual environmnent is activated, checking if the command prompt has the prefix `(venv)`.
 
 To install all the requirements, run the following:
 
